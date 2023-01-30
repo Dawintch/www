@@ -1,9 +1,11 @@
 // Get the form and list elements from the page
 const form = document.querySelector("#todo");
 const list = form.querySelector("ul");
+localStorage.setItem("n",0)
 
 // Keep a list of the current tasks
 const tasks = [];
+
 
 // Listen for whenever the form is submitted
 form.addEventListener("submit", event => {
@@ -21,6 +23,12 @@ form.addEventListener("submit", event => {
 
 	// Add the input value to the tasks list
 	tasks.push(value);
+	localStorage.setItem(tasks.length-1,value)
+	var temp = parseInt(localStorage.getItem("n"))
+	temp += 1
+	localStorage.setItem("n",temp)
+	console.log(localStorage.getItem("n"))
+	console.log(typeof localStorage.getItem("n"));
 
 	// Render the task list
 	renderTaskList();
@@ -35,14 +43,14 @@ function renderTaskList() {
 	list.innerHTML = "";
 
 	// Iterate through the tasks
-	tasks.forEach(task => {
+	for (let i = parseInt(localStorage.getItem("n")); i>0;i--){
 		// Create a list item element
 		const li = document.createElement("li");
 
 		// Give it this task's text
-		li.textContent = task;
+		li.textContent = localStorage.getItem(i);
 
 		// Append it to the list
 		list.append(li);
-	});
+	};
 }
